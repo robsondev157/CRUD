@@ -1,5 +1,6 @@
+import os
 #variáveis
-admin = 'MasterAdmin'
+admin = 'admin'
 senha_admin = '21071994'
 dados_usuario = []
 login = ''
@@ -39,101 +40,110 @@ while True:
 
         if (login_input, senha_input) in dados_usuario:
             print('Login realizado com sucesso!')
+            while True:
+                print('Digite uma das opções abaixo:')
+                print('1. Alterar login')
+                print('2. Alterar senha')
+                print('3. Deletar usuário')
+                print('4. Sair')
+                opcao_usuario = input('Opção: ')
 
-            if login_input == login and senha_input == senha:
-                print('Deseja alterar o login ou a senha?')
-                alterar = input('Digite "login" para alterar o login ou "senha" para alterar a senha: ')
-
-                if alterar.lower() == 'login':
-                    trocar_login = input('Digite o novo login: ')
-                    dados_usuario.remove((login, senha))
-                    login = trocar_login
-                    usuario = login, senha
-                    dados_usuario.append(usuario)
+                if opcao_usuario == '1':
+                    novo_login = input('Digite o novo login: ')
+                    dados_usuario.remove((login_input, senha_input))
+                    dados_usuario.append((novo_login, senha_input))
                     print('Login alterado com sucesso!')
+                    break
 
-
-                elif alterar.lower() == 'senha':
-                    trocar_senha = input('Digite a nova senha: ')
-                    dados_usuario.remove((login, senha))
-                    senha = trocar_senha
-                    usuario = login, senha
-                    dados_usuario.append(usuario)
+                elif opcao_usuario == '2':
+                    nova_senha = input('Digite a nova senha: ')
+                    dados_usuario.remove((login_input, senha_input))
+                    dados_usuario.append((login_input, nova_senha))
                     print('Senha alterada com sucesso!')
+                    break
+
+                elif opcao_usuario == '3':
+                    dados_usuario.remove((login_input, senha_input))
+                    print('Usuário deletado com sucesso!')
+                    break
+
+                elif opcao_usuario == '4':
+                    print('Saindo do menu de usuário.')
+                    break
+                
                 else:
-                    print('Opção inválida. Nenhuma alteração foi feita.')
+                    print('Opção inválida. Tente novamente.')
 
         else:
             print('Login ou senha incorretos.')   
 
 # Acesso ao modo admin
     if opcao == '3':
-
-#loop para login do admin
-        while True:
-
+            
             login_admin = input('Digite o login do admin: ')
             senha_admin_input = input('Digite a senha do admin: ')
-
-
             if login_admin == admin and senha_admin_input == senha_admin:
-                print('Acesso ao modo admin concedido.')
-                print('Digite uma das opções abaixo:')
-                
-                print('escolha uma das opções abaixo:')
-                print('1.Usuários cadastrados:')
-                print('2.Alterar login ou senha de um usuário:')
-                print('3.Excluir um usuário:')
-                print('4.Sair do modo admin:')
-                opcao_admin = input('Opção: ')
 
-                if opcao_admin == '1':
-                    if dados_usuario:
-                        print('Usuários cadastrados:')
+#loop do modo admin              
+                while True:
+                    print('Acesso ao modo admin concedido.')
+                    print('Digite uma das opções abaixo:')
+                    
+                    print('escolha uma das opções abaixo:')
+                    print('1.Usuários cadastrados:')
+                    print('2.Alterar login ou senha de um usuário:')
+                    print('3.Excluir um usuário:')
+                    print('4.Sair do modo admin:')
+                    opcao_admin = input('Opção: ')
+                    os.system('cls' if os.name == 'nt' else 'clear')
+
+                    if opcao_admin == '1':
+                        if dados_usuario:
+                            print('Usuários cadastrados:')
+                            for usuario in dados_usuario:
+                                print(f'Login: {usuario[0]}, Senha: {usuario[1]}')
+                        else:
+                            print('Nenhum usuário cadastrado.')
+                            continue
+                    elif opcao_admin == '2':
+                        login_alterar = input('Digite o login do usuário que deseja alterar: ')
                         for usuario in dados_usuario:
-                            print(f'Login: {usuario[0]}, Senha: {usuario[1]}')
-                    else:
-                        print('Nenhum usuário cadastrado.')
-                        continue
-                elif opcao_admin == '2':
-                    login_alterar = input('Digite o login do usuário que deseja alterar: ')
-                    for usuario in dados_usuario:
-                        if usuario[0] == login_alterar:
-                            print('Deseja alterar o login ou a senha?')
-                            alterar_admin = input('Digite "login" para alterar o login ou "senha" para alterar a senha: ')
+                            if usuario[0] == login_alterar:
+                                print('Deseja alterar o login ou a senha?')
+                                alterar_admin = input('Digite "login" para alterar o login ou "senha" para alterar a senha: ')
 
-                            if alterar_admin.lower() == 'login':
-                                novo_login = input('Digite o novo login: ')
-                                dados_usuario.remove(usuario)
-                                usuario = novo_login, usuario[1]
-                                dados_usuario.append(usuario)
-                                print('Login alterado com sucesso!')
+                                if alterar_admin.lower() == 'login':
+                                    novo_login = input('Digite o novo login: ')
+                                    dados_usuario.remove(usuario)
+                                    usuario = novo_login, usuario[1]
+                                    dados_usuario.append(usuario)
+                                    print('Login alterado com sucesso!')
 
-                            elif alterar_admin.lower() == 'senha':
-                                nova_senha = input('Digite a nova senha: ')
+                                elif alterar_admin.lower() == 'senha':
+                                    nova_senha = input('Digite a nova senha: ')
+                                    dados_usuario.remove(usuario)
+                                    usuario = usuario[0], nova_senha
+                                    dados_usuario.append(usuario)
+                                    print('Senha alterada com sucesso!')
+                                else:
+                                    print('Opção inválida. Nenhuma alteração foi feita.')
+                                break
+                        else:
+                            print('Usuário não encontrado.')
+                            continue
+                    elif opcao_admin == '3':
+                        login_excluir = input('Digite o login do usuário que deseja excluir: ')
+                        for usuario in dados_usuario:
+                            if usuario[0] == login_excluir:
                                 dados_usuario.remove(usuario)
-                                usuario = usuario[0], nova_senha
-                                dados_usuario.append(usuario)
-                                print('Senha alterada com sucesso!')
-                            else:
-                                print('Opção inválida. Nenhuma alteração foi feita.')
-                            break
-                    else:
-                        print('Usuário não encontrado.')
-                        continue
-                elif opcao_admin == '3':
-                    login_excluir = input('Digite o login do usuário que deseja excluir: ')
-                    for usuario in dados_usuario:
-                        if usuario[0] == login_excluir:
-                            dados_usuario.remove(usuario)
-                            print('Usuário excluído com sucesso!')
-                            break
-                    else:
-                        print('Usuário não encontrado.')
-                        continue
-                elif opcao_admin == '4':
-                    print('Saindo do modo admin.')
-                    break
+                                print('Usuário excluído com sucesso!')
+                                break
+                        else:
+                            print('Usuário não encontrado.')
+                            continue
+                    elif opcao_admin == '4':
+                        print('Saindo do modo admin.')
+                        break
 
             else:
                 print('Login ou senha do admin incorretos.')

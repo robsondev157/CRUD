@@ -1,0 +1,202 @@
+import os
+#variáveis
+admin = 'admin'
+senha_admin = '21071994'
+dados_usuario = []
+login = ''
+senha = ''
+usuario = login, senha
+trocar_senha = ''
+trocar_login = ''
+opcao = ''
+
+#loop principal
+while True:
+
+    print('-----------------------')
+    print('- Cadastro de Usuário -')
+    print('-----------------------')
+    print('Digite uma das opções abaixo:')
+    print('1. Cadastrar novo usuário')
+    print('2. fazer login')
+    print('3.Entrar como admin')
+    print('4. Sair')
+    opcao = input('Opção: ')
+
+# Cadastro de usuário
+    if opcao == '1':
+        while True:
+            print('Crie seu usuario e senha!')
+            print('Ou digite [s] para sair')
+            login = input('Digite o login do usuário: ')
+            senha = input('Digite a senha do usuário: ')
+
+            if login in dados_usuario:
+                print('Esse login já existe!')
+
+            else:
+                usuario = login, senha 
+                dados_usuario.append(usuario)
+                print('Usuário cadastrado com sucesso!')
+                break
+
+# Login de usuário
+    elif opcao == '2':
+        login = input('Digite o login do usuário: ')
+        senha = input('Digite a senha do usuário: ')
+
+        if (login, senha) in dados_usuario:
+            print('Login realizado com sucesso!')
+
+            while True:
+                print('Digite uma das opções abaixo:')
+                print('1. Alterar login')
+                print('2. Alterar senha')
+                print('3. Deletar usuário')
+                print('4. Sair')
+                opcao_usuario = input('Opção: ')
+
+                if opcao_usuario == '1':
+                    while True:
+                        print('Digite login e senha para alterar')
+                        login = input('Digite o login do usuário: ')
+                        senha = input('Digite a senha do usuário: ')
+
+                        if (login, senha) in dados_usuario:
+                            login = input('Digite o novo login: ')
+                            if login in dados_usuario:
+                                print('Esse login já existe!')
+                            else:
+                                dados_usuario.remove((login, senha))
+                                login_novo = login
+                                dados_usuario.append((login_novo, senha))
+                                print('Login alterado com sucesso!')
+                        else :
+                            print('Login ou senha incorretos.')
+                            break
+
+
+                
+                elif opcao_usuario == '2':
+                    while True:
+                        print('Digite login é senha para alterar')
+                        login = input('Digite o login do usuário: ')
+                        senha = input('Digite a senha do usuário: ')
+
+                        if (login, senha) in dados_usuario:
+                            dados_usuario.remove((login, senha))
+                            senha = input('Digite a nova senha: ')
+                            dados_usuario.append((login, senha))
+                            print('Senha alterada com sucesso!')
+                            break
+                        else:
+                            print('Login ou senha incorretos.')
+                            break
+                            
+
+                elif opcao_usuario == '3':
+                    while True:
+                        print('Digite login e senha para alterar')
+                        login_input = input('Digite o login do usuário: ')
+                        senha_input = input('Digite a senha do usuário: ')
+
+                        if (login_input, senha_input) in dados_usuario:
+                            dados_usuario.remove((login_input, senha_input))
+                            print('Usuário deletado com sucesso!')
+                            break
+                        else:
+                            print('Login ou senha incorretos.')
+                            break
+
+                elif opcao_usuario == '4':
+                        print('Saindo do menu de usuário.')
+                        break
+                    
+                else:
+                    print('Opção inválida. Tente novamente.')
+
+        else:
+            print('Login ou senha incorretos.')   
+
+# Acesso ao modo admin
+    elif opcao == '3':
+            
+            login_admin = input('Digite o login do admin: ')
+            senha_admin = input('Digite a senha do admin: ')
+            if login_admin == admin and senha_admin == senha_admin:
+#loop do modo admin              
+                while True:
+                    print('Acesso ao modo admin concedido.')
+                    print('escolha uma das opções abaixo:')
+                    print('1.Usuários cadastrados:')
+                    print('2.Alterar login ou senha de um usuário:')
+                    print('3.Excluir um usuário:')
+                    print('4.Sair do modo admin:')
+                    opcao_admin = input('Opção: ')
+                    os.system('cls' if os.name == 'nt' else 'clear')
+
+                    if opcao_admin == '1':
+                        if dados_usuario:
+                            print('Usuários cadastrados:')
+
+                            for usuario in dados_usuario:
+                                print(f'Login: {usuario[0]}, Senha: {usuario[1]}')
+
+                        else:
+                            print('Nenhum usuário cadastrado.')
+                            continue
+
+                    elif opcao_admin == '2':
+                        login_alterar = input('Digite o login do usuário que deseja alterar: ')
+                        
+                        for usuario in dados_usuario:
+
+                            if usuario[0] == login_alterar:
+                                print('Deseja alterar o login ou a senha?')
+                                alterar_admin = input('Digite "login" para alterar o login ou "senha" para alterar a senha: ')
+
+                                if alterar_admin.lower() == 'login':
+                                    novo_login = input('Digite o novo login: ')
+                                    dados_usuario.remove(usuario)
+                                    usuario = novo_login, usuario[1]
+                                    dados_usuario.append(usuario)
+                                    print('Login alterado com sucesso!')
+
+                                elif alterar_admin.lower() == 'senha':
+                                    nova_senha = input('Digite a nova senha: ')
+                                    dados_usuario.remove(usuario)
+                                    usuario = usuario[0], nova_senha
+                                    dados_usuario.append(usuario)
+                                    print('Senha alterada com sucesso!')
+
+                                else:
+                                    print('Opção inválida. Nenhuma alteração foi feita.')
+                                break
+                        else:
+                            print('Usuário não encontrado.')
+                            continue
+
+                    elif opcao_admin == '3':
+                        login_excluir = input('Digite o login do usuário que deseja excluir: ')
+
+                        for usuario in dados_usuario:
+                            if usuario[0] == login_excluir:
+                                dados_usuario.remove(usuario)
+                                print('Usuário excluído com sucesso!')
+                                break
+                        else:
+                            print('Usuário não encontrado.')
+                            continue
+
+                    elif opcao_admin == '4':
+                        print('Saindo do modo admin.')
+                        break
+
+            else:
+                print('Login ou senha do admin incorretos.')
+                continue
+
+    elif opcao == '4':
+        print('Saindo do programa...')
+        print('Programa encerrado.')
+        break

@@ -144,7 +144,6 @@ while True:
 
                         else:
                             print('Nenhum usuário cadastrado.')
-                            continue
 
                     elif opcao_admin == '2':
                         login_alterar = input('Digite o login do usuário que deseja alterar: ')
@@ -174,7 +173,6 @@ while True:
                                 break
                         else:
                             print('Usuário não encontrado.')
-                            continue
 
                     elif opcao_admin == '3':
                         login_excluir = input('Digite o login do usuário que deseja excluir: ')
@@ -186,7 +184,6 @@ while True:
                                 break
                         else:
                             print('Usuário não encontrado.')
-                            continue
 
                     elif opcao_admin == '4':
                         print('Saindo do modo admin.')
